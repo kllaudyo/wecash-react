@@ -7,7 +7,12 @@ import {
     FETCH_CATEGORIAS_FAILED,
     FETCH_MOVIMENTOS_SUCCESS,
     FETCH_MOVIMENTOS_STARTED,
-    FETCH_MOVIMENTOS_FAILED, FETCH_USUARIOS_SUCCESS, FETCH_USUARIOS_STARTED, FETCH_USUARIOS_FAILED
+    FETCH_MOVIMENTOS_FAILED,
+    FETCH_USUARIOS_SUCCESS,
+    FETCH_USUARIOS_STARTED,
+    FETCH_USUARIOS_FAILED,
+    CREATE_CONTA_STARTED,
+    UPDATE_CONTA_STARTED, CREATE_CONTA_FAILED, UPDATE_CONTA_FAILED, CREATE_CONTA_SUCCESS, UPDATE_CONTA_SUCCESS
 } from "../constants";
 
 const initialState = {
@@ -20,7 +25,15 @@ const initialState = {
 };
 
 const root = (state=initialState, action) => {
-    const {contas, categorias, movimentos, usuarios, error} = action;
+    const {
+        contas,
+        categorias,
+        movimentos,
+        usuarios,
+        error,
+        id_conta,
+        ds_conta
+    } = action;
     switch (action.type) {
         case FETCH_CONTAS_SUCCESS:
             return {
@@ -28,6 +41,34 @@ const root = (state=initialState, action) => {
                 isLoading: false,
                 error: null,
                 contas:contas.map(({id_conta, ds_conta}) => ({id_conta, ds_conta}))
+            };
+        case CREATE_CONTA_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: null,
+                contas:[
+                    ...state.contas,
+                    {
+                        id_conta,
+                        ds_conta
+                    }
+                ]
+            };
+        case UPDATE_CONTA_SUCCESS:
+            console.log(id_conta);
+            return {
+                ...state,
+                isLoading: false,
+                error: null,
+                contas: state.contas.map(conta => {
+                    if(conta.id_conta === id_conta)
+                        return {
+                            id_conta,
+                            ds_conta
+                        };
+                    return conta;
+                })
             };
         case FETCH_CATEGORIAS_SUCCESS:
             return {
@@ -63,6 +104,8 @@ const root = (state=initialState, action) => {
                 error: null,
                 usuarios: usuarios.map(({id_usuario, nm_usuario, nm_email, dt_cadastro}) => ({id_usuario, nm_usuario, nm_email, dt_cadastro}))
             };
+        case CREATE_CONTA_STARTED:
+        case UPDATE_CONTA_STARTED:
         case FETCH_USUARIOS_STARTED:
         case FETCH_MOVIMENTOS_STARTED:
         case FETCH_CATEGORIAS_STARTED:
@@ -71,6 +114,8 @@ const root = (state=initialState, action) => {
                 ...state,
                 isLoading:true
             };
+        case CREATE_CONTA_FAILED:
+        case UPDATE_CONTA_FAILED:
         case FETCH_USUARIOS_FAILED:
         case FETCH_CATEGORIAS_FAILED:
         case FETCH_MOVIMENTOS_FAILED:
