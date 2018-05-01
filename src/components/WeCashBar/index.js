@@ -13,6 +13,7 @@ import {
     Container,
 } from 'reactstrap';
 import IconAdd from 'react-icons/lib/md/add-circle';
+import IconAccount from 'react-icons/lib/md/account-circle';
 import UpdateBlocker from "../UpdateBlocker/";
 
 const WeCashBar = props =>
@@ -47,6 +48,19 @@ const WeCashBar = props =>
                         </DropdownItem>
                         <DropdownItem>
                             Categoria
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                        <IconAccount size={24} />
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem tag={Link} to="/usuarios">
+                            Usuários
+                        </DropdownItem>
+                        <DropdownItem>
+                            Sair
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
