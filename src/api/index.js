@@ -14,4 +14,6 @@ const client = axios.create({
 export const
 
     getContas = () => client.get('/contas'),
-    getCategorias = () => client.get('/categorias');
+    getCategorias = () => client.get('/categorias'),
+    getMovimentos = () => client.get('/movimentos'),
+    getUsuarios = () => client.get('/usuarios');
