@@ -7,7 +7,16 @@ import {
     FETCH_CATEGORIAS_FAILED,
     FETCH_MOVIMENTOS_SUCCESS,
     FETCH_MOVIMENTOS_STARTED,
-    FETCH_MOVIMENTOS_FAILED, FETCH_USUARIOS_FAILED, FETCH_USUARIOS_SUCCESS, FETCH_USUARIOS_STARTED
+    FETCH_MOVIMENTOS_FAILED,
+    FETCH_USUARIOS_FAILED,
+    FETCH_USUARIOS_SUCCESS,
+    FETCH_USUARIOS_STARTED,
+    CREATE_CONTA_STARTED,
+    UPDATE_CONTA_STARTED,
+    CREATE_CONTA_SUCCESS,
+    UPDATE_CONTA_SUCCESS,
+    UPDATE_CONTA_FAILED,
+    CREATE_CONTA_FAILED
 } from "../constants";
 
 import * as api from '../api';
@@ -16,6 +25,14 @@ export const
 
     fetchContasStarted = () => ({
         type: FETCH_CONTAS_STARTED
+    }),
+
+    createContaStarted = () => ({
+        type: CREATE_CONTA_STARTED
+    }),
+
+    editContaStarted = () => ({
+        type: UPDATE_CONTA_STARTED,
     }),
 
     fetchCategoriasStarted = () => ({
@@ -35,6 +52,18 @@ export const
         contas
     }),
 
+    createContaSuccess = ({id_conta, ds_conta}) => ({
+        type: CREATE_CONTA_SUCCESS,
+        id_conta,
+        ds_conta
+    }),
+
+    editContaSucess = ({id_conta, ds_conta}) => ({
+        type: UPDATE_CONTA_SUCCESS,
+        id_conta,
+        ds_conta
+    }),
+
     fetchCategoriasSuccess = categorias => ({
         type: FETCH_CATEGORIAS_SUCCESS,
         categorias
@@ -52,6 +81,16 @@ export const
 
     fetchContasFailed = error => ({
         type: FETCH_CONTAS_FAILED,
+        error
+    }),
+
+    createContaFailed = error => ({
+        type:CREATE_CONTA_FAILED,
+        error
+    }),
+
+    editContaFailed = error => ({
+        type: UPDATE_CONTA_FAILED,
         error
     }),
 
@@ -75,6 +114,20 @@ export const
         api.getContas()
             .then( res => dispatch(fetchContasSuccess(res.data)))
             .catch( err => dispatch(fetchContasFailed( err.message)))
+    },
+
+    createConta = conta => disptach => {
+        disptach(createContaStarted());
+        api.postConta(conta)
+            .then(res => disptach(createContaSuccess(res.data.payload)))
+            .catch(err => disptach(createContaFailed(err)))
+    },
+
+    editConta = conta => dispatch => {
+        dispatch(editContaStarted());
+        api.putConta(conta)
+            .then(res => dispatch(editContaSucess(res.data.payload)))
+            .catch(err => dispatch(editContaFailed(err)))
     },
 
     fetchCategorias = () => dispatch => {
