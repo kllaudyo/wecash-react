@@ -7,7 +7,7 @@ import {
     FETCH_CATEGORIAS_FAILED,
     FETCH_MOVIMENTOS_SUCCESS,
     FETCH_MOVIMENTOS_STARTED,
-    FETCH_MOVIMENTOS_FAILED
+    FETCH_MOVIMENTOS_FAILED, FETCH_USUARIOS_SUCCESS, FETCH_USUARIOS_STARTED, FETCH_USUARIOS_FAILED
 } from "../constants";
 
 const initialState = {
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const root = (state=initialState, action) => {
-    const {contas, categorias, movimentos, error} = action;
+    const {contas, categorias, movimentos, usuarios, error} = action;
     switch (action.type) {
         case FETCH_CONTAS_SUCCESS:
             return {
@@ -56,6 +56,14 @@ const root = (state=initialState, action) => {
                         vl_confirmado
                     }))
             };
+        case FETCH_USUARIOS_SUCCESS:
+            return {
+                ...state,
+                isLoading:false,
+                error: null,
+                usuarios: usuarios.map(({id_usuario, nm_usuario, nm_email, dt_cadastro}) => ({id_usuario, nm_usuario, nm_email, dt_cadastro}))
+            };
+        case FETCH_USUARIOS_STARTED:
         case FETCH_MOVIMENTOS_STARTED:
         case FETCH_CATEGORIAS_STARTED:
         case FETCH_CONTAS_STARTED:
@@ -63,6 +71,7 @@ const root = (state=initialState, action) => {
                 ...state,
                 isLoading:true
             };
+        case FETCH_USUARIOS_FAILED:
         case FETCH_CATEGORIAS_FAILED:
         case FETCH_MOVIMENTOS_FAILED:
         case FETCH_CONTAS_FAILED:
