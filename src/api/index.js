@@ -14,6 +14,14 @@ const client = axios.create({
 export const
 
     getContas = () => client.get('/contas'),
+
+    postConta = conta => client.post('/contas', conta),
+
+    putConta = conta => client.put(`/contas/${conta.id_conta}`, conta),
+
     getCategorias = () => client.get('/categorias'),
+
     getMovimentos = () => client.get('/movimentos'),
-    getUsuarios = () => client.get('/usuarios');
+
+    getUsuarios = () => client.get('/usuarios')
+;
