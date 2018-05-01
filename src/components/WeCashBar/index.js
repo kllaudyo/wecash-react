@@ -12,7 +12,7 @@ import {
     DropdownItem,
     Container,
 } from 'reactstrap';
-import UpdateBlocker from "../UpdateBlocker";
+import UpdateBlocker from "../UpdateBlocker/";
 
 const WeCashBar = props =>
     <Navbar color="dark" dark expand="md" fixed={"fixed"}>
