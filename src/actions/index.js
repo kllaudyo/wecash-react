@@ -7,7 +7,7 @@ import {
     FETCH_CATEGORIAS_FAILED,
     FETCH_MOVIMENTOS_SUCCESS,
     FETCH_MOVIMENTOS_STARTED,
-    FETCH_MOVIMENTOS_FAILED
+    FETCH_MOVIMENTOS_FAILED, FETCH_USUARIOS_FAILED, FETCH_USUARIOS_SUCCESS, FETCH_USUARIOS_STARTED
 } from "../constants";
 
 import * as api from '../api';
@@ -26,6 +26,10 @@ export const
         type: FETCH_MOVIMENTOS_STARTED
     }),
 
+    fetchUsuariosStarted = () => ({
+        type: FETCH_USUARIOS_STARTED
+    }),
+
     fetchContasSuccess = contas => ({
         type : FETCH_CONTAS_SUCCESS,
         contas
@@ -41,6 +45,11 @@ export const
         movimentos
     }),
 
+    fetchUsuariosSuccess = usuarios => ({
+        type: FETCH_USUARIOS_SUCCESS,
+        usuarios
+    }),
+
     fetchContasFailed = error => ({
         type: FETCH_CONTAS_FAILED,
         error
@@ -53,6 +62,11 @@ export const
 
     fetchMovimentosFailed = error => ({
         type: FETCH_MOVIMENTOS_FAILED,
+        error
+    }),
+
+    fetchUsuariosFailed = error => ({
+        type: FETCH_USUARIOS_FAILED,
         error
     }),
 
@@ -75,5 +89,12 @@ export const
         api.getMovimentos()
             .then( res => dispatch(fetchMovimentosSuccess(res.data)))
             .catch( err => dispatch(fetchMovimentosFailed(err.message)))
+    },
+
+    fetchUsuarios = () => dispatch => {
+        dispatch(fetchUsuariosStarted());
+        api.getUsuarios()
+            .then(res => dispatch(fetchUsuariosSuccess(res.data)))
+            .catch(err => dispatch(fetchUsuariosFailed(err.message)))
     }
 ;
