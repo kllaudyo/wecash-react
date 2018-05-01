@@ -12,6 +12,7 @@ import {
     DropdownItem,
     Container,
 } from 'reactstrap';
+import IconAdd from 'react-icons/lib/md/add-circle';
 import UpdateBlocker from "../UpdateBlocker/";
 
 const WeCashBar = props =>
@@ -22,9 +23,20 @@ const WeCashBar = props =>
                 <input className="form-control mr-sm-2 form-control-sm" type="search" placeholder="Filtrar..." />
             </form>
             <Nav className="ml-auto" navbar>
+                <UpdateBlocker>
+                    <NavItem>
+                        <NavLink tag={Link} to="/movimentos" activeClassName="active">Movimentos</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} to="/contas">Contas</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} to="/categorias">Categorias</NavLink>
+                    </NavItem>
+                </UpdateBlocker>
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                        Adicionar
+                        <IconAdd size={24} />
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem>
@@ -38,17 +50,6 @@ const WeCashBar = props =>
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
-                <UpdateBlocker>
-                    <NavItem>
-                        <NavLink tag={Link} to="/movimentos" activeClassName="active">Movimentos</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink tag={Link} to="/contas">Contas</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink tag={Link} to="/categorias">Categorias</NavLink>
-                    </NavItem>
-                </UpdateBlocker>
             </Nav>
         </Container>
     </Navbar>;
