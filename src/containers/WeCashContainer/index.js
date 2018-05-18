@@ -4,6 +4,7 @@ import { Container, Alert } from 'reactstrap';
 import { createConta, editConta } from "../../actions";
 import WeCashBar from '../../components/WeCashBar';
 import ContaModal from '../../components/ContaModal';
+import CategoriaModal from "../../components/CategoriaModal";
 
 export default WrappedComponent =>
     connect(({error, ownProps}) => ({error, ...ownProps}))(class extends React.Component{
@@ -12,12 +13,14 @@ export default WrappedComponent =>
             super(props);
             this.state = {
                 is_open_modal_conta:false,
-                conta:{}
+                is_open_modal_categoria:false,
+                conta:{},
+                categoria:{}
             }
         }
 
         render () {
-            const { conta, is_open_modal_conta } = this.state;
+            const { conta, is_open_modal_conta, is_open_modal_categoria, categoria } = this.state;
             const { error } = this.props;
             return (
                 <Fragment>
@@ -31,14 +34,25 @@ export default WrappedComponent =>
                             this.handleToggleModalConta();
                         }}
                     />
+
+                    <CategoriaModal
+                        categoria={categoria}
+                        isOpen={is_open_modal_categoria}
+                        onCancel={()=>{
+                            this.handleToggleModalCategoria();
+                        }}
+                    />
+
                     <WeCashBar
                         onOpenModalConta={this.handleOpenModalConta}
+                        onOpenModalCategoria={this.handleOpenModalCategoria}
                     />
                     <Container style={{marginTop:16}}>
                         { error!==null && (<Alert color="danger">{error}</Alert>)}
                         <WrappedComponent
                             {...this.props}
                             onOpenModalConta={conta => this.handleOpenModalConta(conta)}
+                            onOpenModalCategoria={categoria => this.handleOpenModalCategoria(categoria)}
                         />
                     </Container>
                 </Fragment>
@@ -48,8 +62,14 @@ export default WrappedComponent =>
         handleToggleModalConta = () =>
             this.setState({is_open_modal_conta: !this.state.is_open_modal_conta});
 
+        handleToggleModalCategoria = () =>
+            this.setState({is_open_modal_categoria: !this.state.is_open_modal_categoria});
+
         handleOpenModalConta = (conta={}) =>
             this.setState({is_open_modal_conta:true, conta});
+
+        handleOpenModalCategoria = (categoria={}) =>
+            this.setState({is_open_modal_categoria: true, categoria});
 
         handleChangeConta = e => {
             e.persist();

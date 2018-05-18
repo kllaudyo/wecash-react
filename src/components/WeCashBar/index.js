@@ -16,7 +16,7 @@ import IconAdd from 'react-icons/lib/md/add-circle';
 import IconAccount from 'react-icons/lib/md/account-circle';
 import UpdateBlocker from "../UpdateBlocker/";
 
-const WeCashBar = ({onOpenModalConta}) =>
+const WeCashBar = ({onOpenModalConta, onOpenModalCategoria}) =>
     <Navbar color="dark" dark expand="md" fixed={"fixed"}>
         <Container>
             <NavbarBrand href="/">WeCash</NavbarBrand>
@@ -48,7 +48,9 @@ const WeCashBar = ({onOpenModalConta}) =>
                         >
                             Conta
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem
+                            onClick={onOpenModalCategoria}
+                        >
                             Categoria
                         </DropdownItem>
                     </DropdownMenu>
